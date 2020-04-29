@@ -1,0 +1,11 @@
+dist: trusty
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t NurseBot .
+        - docker images
+        - docker tag NurseBot $DOCKER_USERNAME/NurseBot
+        - docker push $DOCKER_USERNAME/NurseBot
